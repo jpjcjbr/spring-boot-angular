@@ -8,21 +8,28 @@ angular.module('springBootAngularApp', [
     'ngSanitize',
     'tmh.dynamicLocale'
 ])
-
-    .run(function ($translate, tmhDynamicLocale) {
-    	$translate.use('en');
-    	tmhDynamicLocale.set('en');
-    })
-    .config(function ($urlRouterProvider, $translateProvider, tmhDynamicLocaleProvider) {
-    	
-    	$translateProvider.useLoader('$translatePartialLoader', {
-            urlTemplate: 'i18n/{lang}/{part}.json'
-        });
-    	
-    	$translateProvider.useSanitizeValueStrategy('sanitize');
-    	$translateProvider.preferredLanguage('en');
-    	
-    	tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
-    	
-    	$urlRouterProvider.otherwise('/home');
+.run(function ($translate, tmhDynamicLocale, $rootScope) {
+	var changeLocale = function(newLocale) {
+		$translate.use(newLocale);
+		tmhDynamicLocale.set(newLocale);
+	}
+	
+	$rootScope.changeLocale = changeLocale;
+	
+	changeLocale('en');
+})
+.config(function ($urlRouterProvider, $translateProvider, tmhDynamicLocaleProvider) {
+	
+	$translateProvider.useLoader('$translatePartialLoader', {
+        urlTemplate: 'i18n/{lang}/{part}.json'
     });
+	
+	$translateProvider.useSanitizeValueStrategy('escape');
+	$translateProvider.preferredLanguage('en');
+	
+	tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+	
+	$urlRouterProvider.otherwise('/home');
+});
+
+
