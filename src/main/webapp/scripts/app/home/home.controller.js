@@ -4,15 +4,14 @@
     angular.module('springBootAngularApp')
         .controller('homeController', homeController);
     
-    homeController.$inject = ['$rootScope'];
+    homeController.$inject = ['$rootScope', '$translate'];
     
-    function homeController($rootScope) {
+    function homeController($rootScope, $translate) {
     	
     	activate();
     	
     	function activate() {
-    		
-    		$rootScope.pageHeader = '';
+    		$rootScope.pageHeader = $translate.instant('home.title');
     	}
     	
     }
