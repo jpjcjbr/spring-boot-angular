@@ -11,7 +11,7 @@
     	activate();
     	
     	function activate() {
-    		$rootScope.pageHeader = $translate.instant('home.title');
+    		$rootScope.pageHeader = 'home.title';
     	}
     	
     }

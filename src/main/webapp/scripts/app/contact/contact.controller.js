@@ -11,11 +11,7 @@
     	activate();
     	
     	function activate() {
-    		$rootScope.pageHeader = $translate.instant('contact.title');
-    		
-    		$translate('contact.title').then(function(title) {
-    			console.log(title);
-    		});
+    		$rootScope.pageHeader = 'contact.title';
     	}
     	
     }

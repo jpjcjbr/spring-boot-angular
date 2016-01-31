@@ -6,13 +6,14 @@ angular.module('springBootAngularApp', [
     'angular-loading-bar',
     'pascalprecht.translate',
     'ngSanitize',
-    'tmh.dynamicLocale'
+    'tmh.dynamicLocale',
+    'ngCookies'
 ])
-.run(function ($translate, tmhDynamicLocale, $rootScope) {
+.run(function ($translate, tmhDynamicLocale, $rootScope, $state, $translatePartialLoader) {
 	var changeLocale = function(newLocale) {
 		$translate.use(newLocale);
 		tmhDynamicLocale.set(newLocale);
-	}
+	};
 	
 	$rootScope.changeLocale = changeLocale;
 	
@@ -26,8 +27,11 @@ angular.module('springBootAngularApp', [
 	
 	$translateProvider.useSanitizeValueStrategy('escape');
 	$translateProvider.preferredLanguage('en');
+	$translateProvider.useCookieStorage();
 	
+	tmhDynamicLocaleProvider.useCookieStorage();
 	tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
+	tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
 	
 	$urlRouterProvider.otherwise('/home');
 });
